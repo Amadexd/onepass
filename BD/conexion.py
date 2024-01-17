@@ -51,10 +51,14 @@ class DAO():
     def equipo(self, ip):
          if self.conexion.is_connected():
             try:
+                nombre_var = ['ideq', 'modelo', 'url', 'ip', 'sw_id']
                 cursor = self.conexion.cursor()
                 sql = "SELECT * FROM equipos WHERE ip = '{0}'"
                 cursor.execute(sql.format(ip))
                 resultados = cursor.fetchall()
-                return resultados
+                print("en funcion0",resultados[0])
+                nombre_datos_eq = dict(zip(nombre_var,resultados[0]))
+                print("en funcion",nombre_datos_eq)
+                return nombre_datos_eq
             except Error as ex:
                 print("Error al intertar la conexión: {0}".format(ex))
