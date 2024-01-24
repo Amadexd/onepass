@@ -13,7 +13,7 @@ def menuPrincipal():
             print ("2.- Escribir datos electrico")
             print ("3.- Ver tabla Dispositivos")
             print ("4.- Ver tabla Inmuebles")
-            print ("5.- Ver tabla Modelos")
+            print ("5.- Ver tabla Equipos")
             print ("6.- Ver tabla Variables")
             print ("7.- =======Salir==================")
             opcion = int(input("Selecione una opcion: "))
@@ -46,7 +46,8 @@ def ejecutarOpcion(opcion):
         try:
             print("Opcion 2")
             dtelect = funciones.get_data_http('192.168.100.33','0')
-            print('Elect=',dtelect)
+            #print('Elect=',dtelect)
+            ''' 
             print(dtelect['apower'])
             print(dtelect['voltage'])
             print(dtelect['current'])
@@ -54,21 +55,43 @@ def ejecutarOpcion(opcion):
             print("byminute",dtelect['aenergy']['by_minute'][0])
             print("minute_ts",dtelect['aenergy']['minute_ts'])
             print("temperoatue",dtelect['temperature']['tC'])
-            dao.registrarDato(dtelect)
+            '''  
+            equi = dao.id_equipo('192.168.100.30',0)
+            print("equi",equi)
+            '''
+            if isinstance(equi[0], str):
+                print("equi0", int(equi[0]))
+            else:
+                print("El primer elemento no es una cadena y no se puede convertir a entero.")
+            '''
+            print("equi00",int(equi[0][0]))
+
+            #print(type(equi))
+            #entero_primer = int(equi[0])
+            #print("imprimiendo",entero_primer)
+            #print("longitud ",len(equi))
+            #enter = 0 
+            #enter = enter + [int(equi[0])]
+            #print("equio en cuadrado",enter)
+            dtelect['id_eq'] = int(equi[0][0])
+            print("equi en opcion2",dtelect)
+            
+            #dao.registrarDato(dtelect)
             # elementos = dao.mostrartabla()
            # funciones.listarTabla(elementos)
+          
         except:
             print("Ocurrio un error.opcio2...")
     elif opcion ==3:
         print("Opcion 3")
+        #nombre_var = ['ideq', 'modelo', 'url', 'ip', 'sw_id']
         equi = dao.equipo('192.168.100.33')
-        print(equi)
-        print(len(equi))
-        print(type(equi))
-        #print(equi[-1])
-        print(equi[0])
+        print("pp",equi['ip'],equi['url'],equi['sw_id'],)
+
     elif opcion ==4:
         print("Opcion 4")
+        equi = dao.id_equipo('192.168.100.30',0)
+        print(equi)
     else:
         print("Opcion no valida....")
 
